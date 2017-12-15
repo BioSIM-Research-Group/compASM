@@ -1,0 +1,6 @@
+#!/bin/bash
+arg1=$1
+arg2=$2
+source /opt/programs/vmd/plugins/compASM/export_amber$2
+which tleap
+tclsh8.5 /opt/programs/vmd/plugins/compASM/ASM.tcl $1 $2

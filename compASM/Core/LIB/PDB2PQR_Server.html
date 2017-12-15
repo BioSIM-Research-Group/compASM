@@ -1,0 +1,233 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<!--
+Copyright (c) 2002-2010, Jens Erik Nielsen, University College Dublin; 
+Nathan A. Baker, Washington University in St. Louis; Paul Czodrowski & 
+Gerhard Klebe, University of Marburg
+
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, 
+are permitted provided that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright notice, 
+      this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright notice, 
+      this list of conditions and the following disclaimer in the documentation 
+      and/or other materials provided with the distribution.
+    * Neither the names of University College Dublin, Washington University in 
+      St. Louis, or University of Marburg nor the names of its contributors may 
+      be used to endorse or promote products derived from this software without 
+      specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
+IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
+INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, 
+BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, 
+DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF 
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE 
+OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED 
+OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+ 
+<title>PDB2PQR Server</title>
+<link rel="stylesheet" href="PDB2PQR%20Server_files/pdb2pqr.css" type="text/css">
+<script language="JavaScript"><!--
+function check(val) {
+
+if(val == "ID")
+{
+document.thisform.PDBID.disabled=false;
+document.thisform.PDB.disabled=true;
+}
+
+else
+{
+document.thisform.PDBID.value="";
+document.thisform.PDBID.disabled=true;
+document.thisform.PDB.disabled=false;
+}
+}
+
+function setff(val){
+if(val == "user")
+{
+document.thisform.USERFF.disabled=false;
+document.thisform.USERNAMES.disabled=false;
+}
+else
+{
+document.thisform.USERFF.disabled=true;
+document.thisform.USERNAMES.disabled=true;
+}
+}
+
+function setph(val){
+if(document.thisform.PROPKA.checked==true)
+{
+document.thisform.PH.disabled=false;
+}
+else
+{
+document.thisform.PH.disabled=true;
+}
+}
+
+function setligand(){
+if(document.thisform.LIGANDCHECK.checked==true)
+{
+document.thisform.LIGAND.disabled=false;
+}
+else
+{
+document.thisform.LIGAND.disabled=true;
+}
+}
+
+function setneutraln(){
+if(document.thisform.NEUTRALN.checked==true)
+{
+document.getElementById("parse").checked=true;
+}
+}
+
+function setneutralc(){
+if(document.thisform.NEUTRALC.checked==true)
+{
+document.getElementById("parse").checked=true;
+}
+}
+
+//-->
+</script>
+</head><body>
+<h2>PDB2PQR Server</h2>
+<p>
+<i>Currently using PDB2PQR Version 1.7</i>
+</p><p>
+Return to <a href="http://www.poissonboltzmann.org/pdb2pqr">the PDB2PQR homepage</a>.<br> 	
+</p><hr> 	
+This server enables a user to convert <a href="http://www.rcsb.org/pdb/">PDB</a>
+ files into PQR files.  PQR files are PDB files where the occupancy and 
+B-factor columns have been replaced by per-atom charge and radius.<p>
+
+pKa calculations are performed by <a href="http://propka.ki.ku.dk/">PROPKA</a>.</p><p>
+
+For more information on PDB2PQR please see the:<br>
+</p><ul>
+	<li> <a href="http://www.poissonboltzmann.org/pdb2pqr">Home Page</a>
+	</li>
+	<li> <a href="http://pdb2pqr.sourceforge.net/userguide.html">User Guide</a> </li>
+	<li> <a href="http://pdb2pqr.sourceforge.net/examples/">Examples</a> </li>
+</ul>
+
+If you use the PDB2PQR service in a publication, please cite:
+<blockquote>Dolinsky TJ, Nielsen JE, McCammon JA, Baker NA. PDB2PQR: an 
+automated pipeline for the setup, execution, and analysis of 
+Poisson-Boltzmann electrostatics calculations. <i>Nucleic Acids Research</i> <b>32</b> W665-W667 (2004). [<a href="http://nar.oupjournals.org/cgi/content/abstract/32/suppl_2/W665">Link</a>]
+</blockquote>
+
+<hr>
+<b>Note:</b> In order to distribute server load, the PDB2PQR server currently
+is limited to a maximum size of 10000 atoms per protein.  If you are interested
+in using PDB2PQR for larger proteins, you are encouraged to download a command
+line version of PDB2PQR from the <a href="http://www.poissonboltzmann.org/pdb2pqr">PDB2PQR home page</a>.  For
+additional limitations, please see the <a href="http://pdb2pqr.sourceforge.net/userguide.html">PDB2PQR user
+	guide</a> <p>
+<b>Note:</b> This server uses automatic refreshing to update the status of your PDB2PQR submission.  Do not use the <i>back</i> button on your browser while the server is running.</p><p>
+
+</p><form action="http://pdb2pqr-2.wustl.edu/pdb2pqr/pdb2pqr.cgi" method="POST" enctype="multipart/form-data" name="thisform">
+
+Please enter either:
+<blockquote>
+<input name="TEXTCONTROL" value="ID" onclick="check(this.value)" checked="checked" type="RADIO">a PDB ID: <input name="PDBID" size="4" maxlength="6" type="text"> <br>
+<input name="TEXTCONTROL" value="UPLOAD" onclick="check(this.value)" type="RADIO">upload a PDB file: <input name="PDB" size="25" maxlength="100" value="" disabled="disabled" type="file">
+</blockquote>
+<p>
+
+Pick a forcefield to use: 
+</p><blockquote>
+<input name="FF" id="amber" value="amber" onclick="setff(this.value)" checked="checked" type="RADIO">AMBER<br> 
+<input name="FF" id="charmm" value="charmm" onclick="setff(this.value)" type="RADIO">CHARMM<br>
+<input name="FF" id="parse" value="parse" onclick="setff(this.value)" type="RADIO">PARSE<br>
+<input name="FF" id="peoepb" value="peoepb" onclick="setff(this.value)" type="RADIO">PEOEPB<br>
+<input name="FF" id="swanson" value="swanson" onclick="setff(this.value)" type="RADIO">SWANSON<br> 
+<input name="FF" id="tyl06" value="tyl06" onclick="setff(this.value)" type="RADIO">TYL06<br>
+<input name="FF" id="user" value="user" onclick="setff(this.value)" type="RADIO">User-defined forcefield (<a href="http://pdb2pqr.sourceforge.net/userguide.html#userff">help</a>): <input name="USERFF" size="25" maxlength="100" value="" disabled="disabled" type="file"><br>
+<label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;User-defined names (<a href="http://pdb2pqr.sourceforge.net/userguide.html#userff">help</a>):</label> <input name="USERNAMES" size="25" maxlength="100" value="" disabled="disabled" type="file"><br>
+<label>&nbsp;&nbsp;* If you select user-defined forcefield, you also need to specify a user-defined .names file.</label><br> 
+</blockquote>
+
+Pick an output naming scheme to use (<a href="http://pdb2pqr.sourceforge.net/userguide.html#outff">help</a>):
+<blockquote>
+<input name="FFOUT" value="internal" checked="checked" type="RADIO">Internal naming scheme (<a href="http://pdb2pqr.sourceforge.net/programmerguide.html#canon">What's this?</a>)<br>
+<input name="FFOUT" value="amber" type="RADIO">AMBER<br>
+<input name="FFOUT" value="charmm" type="RADIO">CHARMM<br>
+<input name="FFOUT" value="parse" type="RADIO">PARSE<br>
+<input name="FFOUT" value="peoepb" type="RADIO">PEOEPB<br>
+<input name="FFOUT" value="swanson" type="RADIO">SWANSON<br>
+<input name="FFOUT" value="tyl06" type="RADIO">TYL06
+
+</blockquote>
+
+Available options: 
+<blockquote>
+<input name="DEBUMP" checked="checked" type="CHECKBOX"> Ensure that new atoms are not rebuilt too close to existing atoms<br>
+<input name="OPT" checked="checked" onclick="setwatopt()" type="CHECKBOX"> Optimize the hydrogen bonding network<br>
+<input name="PROPKA" value="SETPKA" onclick="setph(this.value)" type="CHECKBOX"> Use <a href="http://propka.ki.ku.dk/">PROPKA</a> to assign protonation states at pH <input name="PH" size="4" maxlength="6" value="7" disabled="disabled" type="text"><br>
+<input name="LIGANDCHECK" onclick="setligand()" type="CHECKBOX"> Assign charges to the ligand specified in a MOL2 file: <input name="LIGAND" size="25" maxlength="100" value="" disabled="disabled" type="file"><br>
+<input name="INPUT" checked="checked" type="CHECKBOX"> Create an <a href="http://apbs.wustl.edu/">APBS</a> input file <span style="font-size: 60%;">(this also enables the option to run APBS and visualize your results through the web interface, if it has been installed)</span><br>
+<input name="CHAIN" type="CHECKBOX"> Add/keep chain IDs in the PQR file<br>
+<input name="WHITESPACE" type="CHECKBOX"> Insert whitespaces between atom name and residue name, between x and y, and between y and z<br>
+<input name="TYPEMAP" type="CHECKBOX"> Create Typemap output<br>
+<input name="NEUTRALN" onclick="setneutraln()" type="CHECKBOX"> Make the protein's N-terminus neutral (requires PARSE forcefield)<br>
+<input name="NEUTRALC" onclick="setneutralc()" type="CHECKBOX"> Make the protein's C-terminus neutral (requires PARSE forcefield)
+</blockquote>
+
+<input value="Submit" type="submit"><p>
+ 
+</p><hr>
+The PDB2PQR application and web server was written by:
+<blockquote>
+<a href="http://enzyme.ucd.ie//group_members/jens/">Jens Erik Nielsen</a><br>
+<a href="http://agave.wustl.edu/">Todd Dolinsky</a><br>
+<a href="http://agave.wustl.edu/">Nathan Baker</a><p>
+</p></blockquote>
+PDB2PQR Opal integration by:
+<blockquote>
+<a href="http://nbcr.net/">Wes Goodman</a><br>
+<a href="http://agave.wustl.edu/">Samir Unni</a><br>
+<a href="http://agave.wustl.edu/">Yong Huang</a><p>
+</p></blockquote>
+JMol visualization scripts and applets provided by:
+<blockquote>
+<a href="http://chemapps.stolaf.edu/jmol">Robert Hanson</a><p>
+</p></blockquote>
+
+PDB2PQR is supported by NIH grant GM069702-01 to NAB, the NPACI Alpha Project program, and the <a href="http://nbcr.net/">National Biomedical Computation Resource</a>.<p>
+
+Before sending a bug report you may want to check the <a href="http://sourceforge.net/mailarchive/forum.php?forum=pdb2pqr-users">pdb2pqr-users mailing list archives</a> or the existing <a href="http://sourceforge.net/tracker/?group_id=144228&amp;atid=758143">PDB2PQR SourceForge Bug List</a>
+ to make sure your question has not already been addressed. Otherwise 
+please post all bug reports or feature requests to the appropriate <a href="http://sourceforge.net/tracker/?group_id=144228">PDB2PQR SourceForge Tracker</a>.</p><p>
+For additional support you may contact the <a href="http://lists.sourceforge.net/lists/listinfo/pdb2pqr-users">pdb2pqr-users mailing list</a>.</p><p>
+</p><hr>
+		<center>
+			<small>
+			</small>
+		</center>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script><script src="PDB2PQR%20Server_files/ga.js" type="text/javascript"></script>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script><script src="PDB2PQR%20Server_files/ga.js" type="text/javascript"></script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-11026338-3");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+</form></body></html>

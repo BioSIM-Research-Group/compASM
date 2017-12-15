@@ -1,0 +1,26 @@
+###Amber 9
+
+#export AMBERHOME=/opt/programs/amber/9/mpich2-gnu-4.4.5
+#export PATH=$PATH:$AMBERHOME/exe
+export AMBERHOME=/opt/programs/amber/9/mpich2-intel-13/
+#export AMBERHOME=/opt/programs/amber/12/gnu-4.4.5
+export PATH=$PATH:$AMBERHOME/exe
+
+# OpenMPI GCC 4.4.5
+#       export MPI_HOME=/opt/programs/OPENMPI/1.6.3/gnu-4.4.5/
+#       export PATH=$PATH:/opt/programs/OPENMPI/1.6.3/gnu-4.4.5/bin/
+#       export LD_LIBRARY_PATH=/opt/programs/OPENMPI/1.6.3/gnu-4.4.5/lib/
+
+
+#export AMBERHOME=/opt/programs/amber/12/mpich2-intel-13
+#export PATH=$PATH:$AMBERHOME/bin
+#PATH="/usr/local/bin:/usr/bin:/bin"
+#PATH="$AMBERHOME/bin:$PATH"
+
+###Intel Compilers
+export LD_LIBRARY_PATH=/opt/programs/INTEL/2013/composer_xe_2013.1.117/compiler/lib/intel64
+
+###MPICH2 Intel 2013
+#       export MPI_HOME=/opt/programs/MPICH2/1.5/intel-13/
+#       export PATH=$PATH:/opt/programs/MPICH2/1.5/intel-13/bin/
+#       export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/programs/MPICH2/1.5/intel-13/lib/

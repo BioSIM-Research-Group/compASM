@@ -1,0 +1,38 @@
+#!/bin/bash
+
+### Request number of processors 
+#$ -pe mpi 8
+
+### Home directory where the input files are located
+export HOME_JOB_DIR=/home/jribeiro/teste
+
+### Previleges
+#$ -P grupoA
+
+### System variables
+echo "This job is running on " $HOSTNAME
+echo "Parallel computing in $NSLOTS procs" 
+cat $TMPDIR/machines
+#$ -V
+#$ -cwd
+
+### Create NODE directory
+export NODE_JOB_DIR=/scratch/$JOB_ID
+mkdir -p $NODE_JOB_DIR
+cd $NODE_JOB_DIR
+
+echo "Creating directories = ok"
+
+### Copy the files to the NODE
+cp $HOME_JOB_DIR/inputfile.txt $HOME_JOB_DIR/1DFJ.pdb $NODE_JOB_DIR
+echo "Copying Files        = ok"
+
+### Runs amber Job
+export MPIEXEC_RSH=rsh
+echo "Start Running"
+/opt/ActiveTcl-8.5/bin/tclsh8.5 /home/jribeiro/ASM/main.tcl inputfile.txt
+echo "Done"
+
+### Move file from NODE directory to the HOME directory
+mv  $NODE_JOB_DIR/* $HOME_JOB_DIR
+#rm -rf $NODE_JOB_DIR
